@@ -1,0 +1,9 @@
+{
+"framerate":24,
+"images":["ZFarm_navigation.png"],
+"frames":[[0, 0, 256, 256, 0, 74, 74], [0, 256, 256, 256, 0, 74, 74]],
+"animations":{
+    "granny": {"speed": 1, "frames": [0]},
+    "farm": {"speed": 1, "frames": [1]}
+}
+}

@@ -1,0 +1,1 @@
+START /MAX chrome.exe "http://localhost:8000/src/main/debug.html" && python -m SimpleHTTPServer

@@ -1,0 +1,35 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.jsdoc</groupId>
+    <artifactId>JsDoc</artifactId>
+    <version>3.0.0</version>
+    <packaging>rar</packaging>
+
+    <name>JsDoc</name>
+    <url>https://github.com/jsdoc3/jsdoc</url>
+
+    <properties>
+    </properties>
+
+    <distributionManagement>
+        <repository>
+            <id>articuno</id>
+            <name>articuno-release</name>
+            <url>http://articuno:8081/artifactory/epic-release-local</url>
+        </repository>
+        <snapshotRepository>
+            <id>articuno</id>
+            <name>articuno-snapshot</name>
+            <url>http://articuno:8081/artifactory/epic-snapshot-local</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <build>
+        <plugins>
+        </plugins>
+    </build>
+
+</project>

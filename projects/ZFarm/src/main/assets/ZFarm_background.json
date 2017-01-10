@@ -1,0 +1,6 @@
+{
+"framerate":24,
+"images":["ZFarm.png"],
+"frames":[[0, 0, 1920, 540, 0, 0, 0]],
+"animations":{"background": {"speed": 1, "frames": [0]}}
+}

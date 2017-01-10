@@ -1,0 +1,79 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    overflow: visible;
+    background-color: #a22;
+}
+
+canvas {
+    overflow: visible;
+    transform: translate3d(0, 0, 0);
+    -ms-transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
+}
+
+#bg {
+    position: absolute;
+    z-index: 0;
+    visibility: hidden;
+
+    background-image: url(assets/background.jpg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    -o-background-size: 100% 100%, auto;
+    -moz-background-size: 100% 100%, auto;
+    -webkit-background-size: 100% 100%, auto;
+    background-size: 100% 100%, auto;
+}
+
+#bg img {
+    width: 100%;
+    height: 100%;
+    visibility: hidden;
+}
+
+#scrollPrompt {
+    visibility: hidden;
+    opacity: 0.8;
+}
+
+#scrollPromptImage {
+    z-index: 1;
+    visibility: inherit;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -135px;
+    margin-left: -100px;
+}
+
+#scrollPromptBackground {
+    z-index: 1;
+    visibility: inherit;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 200%;
+    background-color: #fff;
+}
+
+#fps {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: #060;
+    background-color: #333;
+}
+
+/*@font-face {
+    font-family: 'Denk One';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Denk One'), local('DenkOne-Regular'), url(assets/DenkOne.woff) format('woff');
+}*/

@@ -1,0 +1,492 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.epic.pom</groupId>
+    <artifactId>base</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>Base POM</name>
+    <url>http://www.epicindustries.co.uk</url>
+
+    <properties>
+        <!-- Project directories/files -->
+        <resources.dir>target/resources</resources.dir>
+        <lib.dir>target/lib</lib.dir>
+        <compiled.dir>target/${project.build.finalName}</compiled.dir>
+        <src.dir>src/main</src.dir>
+        <js.dir>src${file.separator}main${file.separator}js</js.dir>
+        <test.dir>src/test</test.dir>
+        <test.resources.dir>src/test/resources</test.resources.dir>
+        <compiled.filename>src.js</compiled.filename>
+
+        <!-- Google closure compiler information -->
+        <goog.closure.builder>${resources.dir}/build/closurebuilder.py</goog.closure.builder>
+        <goog.closure.compiler>${resources.dir}/compiler.jar</goog.closure.compiler>
+        <goog.closure.output>compiled</goog.closure.output>
+        <goog.closure.warnings>--compiler_flags='--jscomp_error=checkVars' --compiler_flags='--jscomp_error=checkTypes' --compiler_flags='--jscomp_error=checkDebuggerStatement' --compiler_flags='--jscomp_error=checkRegExp' --compiler_flags='--jscomp_error=checkTypes' --compiler_flags='--jscomp_error=const' --compiler_flags='--jscomp_error=duplicate' --compiler_flags='--jscomp_error=globalThis' --compiler_flags='--jscomp_error=invalidCasts' --compiler_flags='--jscomp_error=missingProperties'</goog.closure.warnings>
+        <goog.closure.compilation_level>SIMPLE_OPTIMIZATIONS</goog.closure.compilation_level>
+        <goog.compiler.flags>--compiler_flags='--warning_level=QUIET' --compiler_flags='--compilation_level=${goog.closure.compilation_level}' --compiler_flags='--language_in=ECMASCRIPT5'</goog.compiler.flags>
+    </properties>
+
+    <distributionManagement>
+        <repository>
+            <id>articuno</id>
+            <name>articuno-release</name>
+            <url>http://articuno:8081/artifactory/epic-release-local</url>
+        </repository>
+        <snapshotRepository>
+            <id>articuno</id>
+            <name>articuno-snapshots</name>
+            <url>http://articuno:8081/artifactory/epic-snapshot-local</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.puremvc.js.multicore</groupId>
+            <artifactId>PureMVC</artifactId>
+            <version>1.0.1</version>
+            <type>rar</type>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.closure</groupId>
+            <artifactId>ClosureCompiler</artifactId>
+            <version>1.0.0</version>
+            <type>rar</type>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.closure</groupId>
+            <artifactId>GoogleClosure</artifactId>
+            <version>1.0.0</version>
+            <type>rar</type>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.jstestdriver</groupId>
+            <artifactId>JsTestDriver</artifactId>
+            <version>1.3.4</version>
+            <type>rar</type>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.jsdoc</groupId>
+            <artifactId>JsDoc</artifactId>
+            <version>3.0.0</version>
+            <type>rar</type>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.createjs</groupId>
+            <artifactId>EaselJS</artifactId>
+            <version>0.7.0</version>
+            <type>rar</type>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.16</version>
+                <configuration>
+                    <skipTests>true</skipTests>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.2</version>
+                <executions>
+                    <execution>
+                        <id>unpack-lib</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>unpack-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <includeGroupIds>
+                                org.puremvc.js.multicore,com.google.closure,com.createjs,${lib.dependency.groups}
+                            </includeGroupIds>
+                            <includeArtifactIds>PureMVC,GoogleClosure,EaselJS,${lib.dependency.ids}</includeArtifactIds>
+                            <outputDirectory>${lib.dir}</outputDirectory>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>unpack-resources</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>unpack-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <includeGroupIds>com.google.closure,com.jsdoc,${resource.dependency.groups}
+                            </includeGroupIds>
+                            <includeArtifactIds>ClosureCompiler,JsDoc,${resource.dependency.ids}</includeArtifactIds>
+                            <outputDirectory>${resources.dir}</outputDirectory>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>unpack-test-resources</id>
+                        <phase>generate-test-resources</phase>
+                        <goals>
+                            <goal>unpack-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <includeGroupIds>com.google.jstestdriver,${resource.dependency.groups}</includeGroupIds>
+                            <includeArtifactIds>JsTestDriver,${resource.dependency.ids}</includeArtifactIds>
+                            <outputDirectory>${test.resources.dir}</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.7</version>
+                <executions>
+                    <execution>
+                        <id>Compile</id>
+                        <phase>compile</phase>
+                        <configuration>
+                            <tasks>
+                                <!-- Clear previous build, important for require builder -->
+                                <delete dir="${compiled.dir}"/>
+                                <mkdir dir="${compiled.dir}"/>
+
+                                <!-- Generate requires using java app -->
+                                <taskdef resource="net/sf/antcontrib/antcontrib.properties"
+                                         classpathref="maven.plugin.classpath"/>
+                                <if>
+                                    <equals arg1="${do.require.build}" arg2="true"/>
+                                    <then>
+                                        <exec executable="java" failonerror="false">
+                                            <arg line="-jar ${resources.dir}/requireBuilder/ClosureRequireBuilder.jar ${basedir} com\epic ${basedir}\${js.dir}"/>
+                                        </exec>
+                                    </then>
+                                    <else>
+                                        <echo message="Skipping require builder, build machine detected"/>
+                                    </else>
+                                </if>
+
+
+                                <!-- Create html script tags in debug.html -->
+
+                                <trycatch property="ant.error.message" reference="ant.error.obj">
+                                    <try>
+                                        <!-- Get closure require paths -->
+                                        <exec executable="python" output="${resources.dir}/closureIncludes.temp"
+                                              failonerror="true">
+                                            <arg line="${goog.closure.builder} --root=${lib.dir} --root=${js.dir} --namespace=${goog.closure.namespace}"/>
+                                        </exec>
+                                    </try>
+                                    <catch>
+                                        <loadfile property="closure.error"
+                                                  srcFile="${resources.dir}/closureIncludes.temp"/>
+                                        <echo message="CLOSURE COMPILER ERROR"/>
+                                        <echo message="${closure.error}"/>
+                                        <fail message="${ant.error.message}"/>
+                                    </catch>
+                                </trycatch>
+
+
+                                <!-- Get min file paths -->
+                                <fileset id="minfiles" dir="${lib.dir}/min">
+                                    <include name="*.js"/>
+                                </fileset>
+                                <pathconvert pathsep="${line.separator}" property="minIncludes" refid="minfiles">
+                                    <map from="${basedir}\" to=""/>
+                                    <map from="${basedir}/" to=""/>
+                                </pathconvert>
+                                <echo file="${resources.dir}/minIncludes.temp">${minIncludes}${line.separator}</echo>
+
+                                <!-- Put all paths in a single temp file -->
+                                <concat destfile="${resources.dir}/imports.temp">
+                                    <file file="${resources.dir}/minIncludes.temp"/>
+                                    <file file="${resources.dir}/closureIncludes.temp"/>
+                                </concat>
+
+                                <concat destfile="${resources.dir}/jsTestDriver.temp">
+                                    <file file="${resources.dir}/minIncludes.temp"/>
+                                    <file file="${resources.dir}/closureIncludes.temp"/>
+                                </concat>
+
+                                <!-- Clean up temp file path files -->
+                                <delete file="${resources.dir}/minIncludes.temp"/>
+
+                                <!-- Convert file paths to relative -->
+                                <replaceregexp file="${resources.dir}/imports.temp" match="\\" replace="/" flags="g"/>
+
+                                <!-- Create script tags -->
+                                <replaceregexp file="${resources.dir}/imports.temp" match="src/"
+                                               replace="    &lt;script src='../" flags="g"/>
+                                <replaceregexp file="${resources.dir}/imports.temp" match="target"
+                                               replace="    &lt;script src='../../target" flags="g"/>
+                                <replaceregexp file="${resources.dir}/imports.temp" match="\.js"
+                                               replace=".js'&gt;&lt;/script&gt;" flags="g"/>
+
+                                <!-- load final file paths into property -->
+                                <echo file="${resources.dir}/imports.temp" append="true"
+                                      message="&lt;script type='text/javascript'&gt;var epicVersionNumber = '${version}';&lt;/script&gt;"/>
+                                <loadfile property="generated.script.tags" srcFile="${resources.dir}/imports.temp"/>
+
+                                <!-- Add script tags to debug -->
+                                <replaceregexp file="${src.dir}/debug.html"
+                                               match="(&lt;!-- Project class imports --&gt;).*?(&lt;!-- End Project class imports --&gt;)"
+                                               replace="\1${line.separator}${generated.script.tags}${line.separator}\2"
+                                               flags="s"/>
+
+                                <!-- Generate js writing script tags for vf -->
+                                <replaceregexp file="${resources.dir}/imports.temp" match="&lt;script"
+                                               replace="document.write(&quot;&lt;script" flags="g"/>
+                                <replaceregexp file="${resources.dir}/imports.temp" match="/script&gt;"
+                                               replace="/script&gt;&quot;);" flags="g"/>
+
+                                <!-- load final file paths into property -->
+                                <loadfile property="generated.js.script.tags" srcFile="${resources.dir}/imports.temp"/>
+
+                                <!-- Add title to debug and index -->
+                                <replaceregexp file="${src.dir}/debug.html"
+                                               match="(&lt;title&gt;).*?(&lt;/title&gt;)"
+                                               replace="\1${project.build.finalName}\2"
+                                               flags="s"/>
+                                <replaceregexp file="${src.dir}/index.html"
+                                               match="(&lt;title&gt;).*?(&lt;/title&gt;)"
+                                               replace="\1${project.build.finalName}\2"
+                                               flags="s"/>
+
+                                <!-- Add version number to App -->
+                                <replaceregexp file="${src.dir}/debug.html"
+                                               match="(&lt;title&gt;).*?(&lt;/title&gt;)"
+                                               replace="\1${project.build.finalName}\2"
+                                               flags="s"/>
+                                <replaceregexp file="${src.dir}/index.html"
+                                               match="(&lt;title&gt;).*?(&lt;/title&gt;)"
+                                               replace="\1${project.build.finalName}\2"
+                                               flags="s"/>
+
+                                <!-- Clean up final file paths temp file -->
+                                <delete file="${resources.dir}/imports.temp"/>
+                            </tasks>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>Test compile</id>
+                        <phase>test-compile</phase>
+                        <configuration>
+                            <tasks>
+                                <!-- Get min file paths -->
+                                <fileset id="minfiles" dir="${lib.dir}/min">
+                                    <include name="*.js"/>
+                                </fileset>
+                                <pathconvert pathsep="${line.separator}" property="minIncludes" refid="minfiles">
+                                    <map from="${basedir}\" to=""/>
+                                    <map from="${basedir}/" to=""/>
+                                </pathconvert>
+                                <echo file="${resources.dir}/minIncludes.temp">${minIncludes}${line.separator}</echo>
+
+                                <!-- Add paths to jsTestDriver config -->
+                                <delete file="${resources.dir}/jsTestDriver.conf"/>
+                                <exec executable="python" output="${resources.dir}/jsTestDriverTemp.conf"
+                                      failonerror="true">
+                                    <arg line="${goog.closure.builder} --root=${lib.dir} --root=${js.dir} --namespace=${goog.closure.namespace}"/>
+                                </exec>
+
+                                <!-- Put all paths in a single temp file -->
+                                <concat destfile="${resources.dir}/imports.temp">
+                                    <file file="${resources.dir}/minIncludes.temp"/>
+                                    <file file="${resources.dir}/jsTestDriverTemp.conf"/>
+                                </concat>
+
+                                <replaceregexp file="${resources.dir}/imports.temp" match="src"
+                                               replace=" - ../.." flags="g"/>
+                                <replaceregexp file="${resources.dir}/imports.temp" match="target"
+                                               replace=" - ../../../target" flags="g"/>
+                                <replaceregexp file="${resources.dir}/imports.temp" match="\\" replace="/"
+                                               flags="g"/>
+
+                                <concat destfile="${test.resources.dir}/jsTestDriver.conf">
+                                    <fileset file="${test.resources.dir}/jstdConfig/jsTestDriverBase.conf"/>
+                                    <fileset file="${resources.dir}/imports.temp"/>
+                                </concat>
+
+                                <delete file="${resources.dir}/imports.temp"/>
+                                <delete file="${resources.dir}/jsTestDriverTemp.conf"/>
+                                <delete file="${resources.dir}/minIncludes.temp"/>
+
+                                <!-- Add server var to test config -->
+                                <replaceregexp file="${test.resources.dir}/jsTestDriver.conf" match="%1"
+                                               replace="${test.server.url}" flags="g"/>
+
+                                <!-- Add project info to sonar properties -->
+                                <replaceregexp file="${test.resources.dir}/sonar-project.properties" match="%1"
+                                               replace="${project.build.finalName}" flags="g"/>
+                                <replaceregexp file="${test.resources.dir}/sonar-project.properties" match="%2"
+                                               replace="${project.name}" flags="g"/>
+                                <replaceregexp file="${test.resources.dir}/sonar-project.properties" match="%3"
+                                               replace="${project.version}" flags="g"/>
+                                <replaceregexp file="${test.resources.dir}/sonar-project.properties" match="%4"
+                                               replace="" flags="g"/>
+                            </tasks>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>ant</groupId>
+                        <artifactId>ant-jsch</artifactId>
+                        <version>1.6.5</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>com.jcraft</groupId>
+                        <artifactId>jsch</artifactId>
+                        <version>0.1.42</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>ant-contrib</groupId>
+                        <artifactId>ant-contrib</artifactId>
+                        <version>20020829</version>
+                        <exclusions>
+                            <exclusion>
+                                <groupId>ant</groupId>
+                                <artifactId>ant</artifactId>
+                            </exclusion>
+                        </exclusions>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <!-- JS Test Driver plugin to run unit test and code coverage -->
+            <!-- <plugin>
+                 <groupId>com.googlecode.jstd-maven-plugin</groupId>
+                 <artifactId>jstd-maven-plugin</artifactId>
+                 <version>1.3.5.1</version>
+                 <configuration>
+                     <runnerMode>QUIET</runnerMode>
+                     <testOutput>target/jstd</testOutput>
+                     <server>${test.server.url}:9876</server>
+                     <reset>true</reset>
+                 </configuration>
+                 <executions>
+                     <execution>
+                         <id>run-tests</id>
+                         <goals>
+                             <goal>test</goal>
+                         </goals>
+                     </execution>
+                 </executions>
+             </plugin>-->
+        </plugins>
+
+    </build>
+
+
+    <profiles>
+        <profile>
+            <id>Development</id>
+            <activation>
+                <os>
+                    <family>windows</family>
+                </os>
+            </activation>
+            <properties>
+                <test.server.url>http://articuno</test.server.url>
+                <js.doc.runner>jsdoc.cmd</js.doc.runner>
+                <sonar.runner>sonar-runner.bat</sonar.runner>
+                <do.require.build>true</do.require.build>
+            </properties>
+        </profile>
+        <profile>
+            <id>Jenkins</id>
+            <activation>
+                <os>
+                    <family>linux</family>
+                </os>
+            </activation>
+            <properties>
+                <test.server.url>http://localhost</test.server.url>
+                <js.doc.runner>jsdoc</js.doc.runner>
+                <sonar.runner>sonar-runner</sonar.runner>
+                <do.require.build>false</do.require.build>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.7</version>
+                        <executions>
+                            <execution>
+                                <id>Deploy</id>
+                                <phase>deploy</phase>
+                                <configuration>
+                                    <tasks>
+                                        <!-- Generate site docs -->
+                                        <chmod file="${resources.dir}/jsdoc/${js.doc.runner}" perm="777"/>
+                                        <exec executable="${resources.dir}/jsdoc/${js.doc.runner}" failonerror="true">
+                                            <arg line="${js.dir} -r -d target/site"/>
+                                        </exec>
+                                        <!--<chmod file="${test.resources.dir}/${sonar.runner}" perm="777"/>
+                                        <exec executable="${test.resources.dir}/${sonar.runner}">
+                                            <arg line="-Dproject.settings=${test.resources.dir}/sonar-project.properties"/>
+                                        </exec>-->
+                                        <!-- Upload final build to preview directory -->
+                                        <ftp action="mkdir" server="articuno"
+                                             remotedir="/srv/www/preview/${project.build.finalName}" userid="andy"
+                                             password="nautilus99">
+                                        </ftp>
+                                        <ftp action="send" server="articuno"
+                                             remotedir="/srv/samba/www/preview/${project.build.finalName}" userid="andy"
+                                             password="nautilus99">
+                                            <fileset dir="${compiled.dir}"/>
+                                        </ftp>
+                                        <!-- Upload site to docs directory -->
+                                        <ftp action="mkdir" server="articuno"
+                                             remotedir="/srv/www/docs/${project.build.finalName}" userid="andy"
+                                             password="nautilus99">
+                                        </ftp>
+                                        <ftp action="send" server="articuno"
+                                             remotedir="/srv/www/docs/${project.build.finalName}" userid="andy"
+                                             password="nautilus99">
+                                            <fileset dir="target/site"/>
+                                        </ftp>
+
+                                        <taskdef name="ftp"
+                                                 classname="org.apache.tools.ant.taskdefs.optional.net.FTP"
+                                                 classpathref="maven.plugin.classpath"/>
+                                    </tasks>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <dependencies>
+                            <dependency>
+                                <groupId>commons-net</groupId>
+                                <artifactId>commons-net</artifactId>
+                                <version>1.4.1</version>
+                            </dependency>
+                            <dependency>
+                                <groupId>ant</groupId>
+                                <artifactId>ant-commons-net</artifactId>
+                                <version>1.6.5</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>

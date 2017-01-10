@@ -1,0 +1,6 @@
+{
+"framerate":24,
+"images":["ZFarm_menuButtons.png"],
+"frames":[[0, 116, 258, 116, 0, 129, 58]],
+"animations":{"menuButton": {"speed": 1, "frames": [0]}}
+}

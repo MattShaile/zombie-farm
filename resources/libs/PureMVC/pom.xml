@@ -1,0 +1,58 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.puremvc.js.multicore</groupId>
+    <artifactId>PureMVC</artifactId>
+    <version>1.0.1</version>
+    <packaging>rar</packaging>
+
+    <name>PureMVC</name>
+    <url>http://puremvc.org</url>
+
+    <properties>
+    </properties>
+
+    <distributionManagement>
+        <repository>
+            <id>articuno</id>
+            <name>articuno-release</name>
+            <url>http://articuno:8081/artifactory/epic-release-local</url>
+        </repository>
+        <snapshotRepository>
+            <id>articuno</id>
+            <name>articuno-snapshot</name>
+            <url>http://articuno:8081/artifactory/epic-snapshot-local</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.4</version>
+                <executions>
+                    <execution>
+                        <phase>prepare-package</phase>
+                        <configuration>
+                            <tasks>
+                                <echo message="${project.build.finalName}"/>
+                                <delete dir="target/${project.build.finalName}"/>
+                                <mkdir dir="target/${project.build.finalName}"/>
+                                <copy todir="target/${project.build.finalName}">
+                                    <fileset dir="src"/>
+                                </copy>
+                            </tasks>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

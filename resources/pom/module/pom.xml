@@ -1,0 +1,51 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.epic.pom</groupId>
+        <artifactId>base</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <groupId>com.epic.pom</groupId>
+    <artifactId>module</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>Module base POM</name>
+    <url>http://www.epicindustries.co.uk</url>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.7</version>
+                <executions>
+                    <execution>
+                        <id>Prepare package</id>
+                        <phase>prepare-package</phase>
+                        <configuration>
+                            <tasks>
+                                <!--Make compiled directory and use google closure compiler to minify and optimize-->
+                                <delete dir="${compiled.dir}"/>
+                                <mkdir dir="${compiled.dir}"/>
+                                <!--Copy js folders to compiled dir-->
+                                <copy todir="${compiled.dir}">
+                                    <fileset dir="src/main/js"/>
+                                </copy>
+                            </tasks>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+
+    </build>
+
+
+</project>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+    <META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
+    <title>ZFarm-1.0-SNAPSHOT</title>
+
+    <!-- Project class imports -->
+    <script src='../../target/lib/min/easeljs-0.7.0.min.js'></script>
+    <script src='../../target/lib/min/preloadjs-0.5.0.min.js'></script>
+    <script src='../../target/lib/min/puremvc-1.0.1.min.js'></script>
+    <script src='../../target/lib/min/soundjs-0.5.2.min.js'></script>
+    <script src='../../target/lib/min/tweenjs-0.5.0.min.js'></script>
+    <script src='../../target/lib/goog/base.js'></script>
+    <script src='../../target/lib/com/epic/common/util/UserAgent.js'></script>
+    <script src='../../target/lib/com/epic/common/util/StageSetup.js'></script>
+    <script src='../../target/lib/com/epic/common/preloader/PreloaderConstants.js'></script>
+    <script src='../../target/lib/com/epic/common/preloader/m/PreloaderProxy.js'></script>
+    <script src='../../target/lib/com/epic/common/core/v/EaselManifest.js'></script>
+    <script src='../main/js/com/epic/zfarm/menu/v/manifest/MenuManifest.js'></script>
+    <script src='../../target/lib/com/epic/common/util/Utils.js'></script>
+    <script src='../../target/lib/com/epic/common/core/v/skins/ISkin.js'></script>
+    <script src='../../target/lib/com/epic/common/core/v/skins/EaselSkin.js'></script>
+    <script src='../../target/lib/com/epic/common/screen/v/skins/RotatePromptSkin.js'></script>
+    <script src='../../target/lib/com/epic/common/screen/m/ScreenConstants.js'></script>
+    <script src='../../target/lib/com/epic/common/screen/v/ScreenMediator.js'></script>
+    <script src='../main/js/com/epic/zfarm/general/v/manifest/GeneralManifest.js'></script>
+    <script src='../main/js/com/epic/zfarm/scenery/v/manifest/SceneryManifest.js'></script>
+    <script src='../../target/lib/com/epic/common/preloader/c/StartPreloadCommand.js'></script>
+    <script src='../main/js/com/epic/zfarm/player/v/manifest/GunManifest.js'></script>
+    <script src='../main/js/com/epic/zfarm/inventory/v/manifest/InventoryManifest.js'></script>
+    <script src='../../target/lib/com/epic/common/sound/SoundMixer.js'></script>
+    <script src='../../target/lib/com/epic/common/sound/SoundClip.js'></script>
+    <script src='../../target/lib/com/epic/common/sound/SoundChannel.js'></script>
+    <script src='../../target/lib/com/epic/common/sound/SoundManager.js'></script>
+    <script src='../../target/lib/com/epic/common/util/CurrencyFormat.js'></script>
+    <script src='../../target/lib/com/epic/common/util/Currency.js'></script>
+    <script src='../../target/lib/com/epic/common/text/v/skins/EaselTextSkin.js'></script>
+    <script src='../../target/lib/com/epic/common/util/QuickText.js'></script>
+    <script src='../main/js/com/epic/zfarm/menu/v/skin/MenuButtonSkin.js'></script>
+    <script src='../../target/lib/com/epic/common/core/m/AssetLib.js'></script>
+    <script src='../../target/lib/com/epic/common/ui/button/v/ButtonComponent.js'></script>
+    <script src='../main/js/com/epic/zfarm/menu/v/event/MenuEvent.js'></script>
+    <script src='../main/js/com/epic/zfarm/menu/v/component/MenuComponent.js'></script>
+    <script src='../main/js/com/epic/zfarm/menu/note/MenuNoteBody.js'></script>
+    <script src='../main/js/com/epic/zfarm/menu/v/MenuMediator.js'></script>
+    <script src='../main/js/com/epic/zfarm/init/c/InitMenuCommand.js'></script>
+    <script src='../../target/lib/com/epic/common/preloader/v/PreloaderMediator.js'></script>
+    <script src='../../target/lib/com/epic/common/preloader/c/PreloadCompleteCommand.js'></script>
+    <script src='../../target/lib/com/epic/common/screen/c/ScreenGameModeCommand.js'></script>
+    <script src='../main/js/com/epic/zfarm/zombie/m/vo/ZombieVO.js'></script>
+    <script src='../main/js/com/epic/zfarm/zombie/m/vo/ZombieConfigVO.js'></script>
+    <script src='../../target/lib/com/epic/common/util/event/TimerEvent.js'></script>
+    <script src='../../target/lib/com/epic/common/util/Timer.js'></script>
+    <script src='../main/js/com/epic/zfarm/zombie/note/ZombieNoteBody.js'></script>
+    <script src='../main/js/com/epic/zfarm/zombie/m/ZombiesProxy.js'></script>
+    <script src='../main/js/com/epic/zfarm/zombie/note/ZombieIDNoteBody.js'></script>
+    <script src='../main/js/com/epic/zfarm/player/note/PlayerNoteBody.js'></script>
+    <script src='../main/js/com/epic/zfarm/player/c/PlayerFireCommand.js'></script>
+    <script src='../main/js/com/epic/zfarm/navigation/m/NavigationProxy.js'></script>
+    <script src='../main/js/com/epic/zfarm/player/m/PlayerProxy.js'></script>
+    <script src='../main/js/com/epic/zfarm/navigation/m/NavigationConstants.js'></script>
+    <script src='../main/js/com/epic/zfarm/player/c/PlayerShootCommand.js'></script>
+    <script src='../main/js/com/epic/zfarm/player/c/macro/PlayerFireMacro.js'></script>
+    <script src='../main/js/com/epic/zfarm/crops/note/CropNoteBody.js'></script>
+    <script src='../main/js/com/epic/zfarm/crops/m/vo/SoilConfigVO.js'></script>
+    <script src='../main/js/com/epic/zfarm/crops/m/vo/CropConfigVO.js'></script>
+    <script src='../main/js/com/epic/zfarm/crops/m/vo/CropVO.js'></script>
+    <script src='../main/js/com/epic/zfarm/crops/m/CropProxy.js'></script>
+    <script src='../main/js/com/epic/zfarm/inventory/m/vo/ItemConfigVO.js'></script>
+    <script src='../main/js/com/epic/zfarm/inventory/m/vo/SeedPacketItemConfigVO.js'></script>
+    <script src='../main/js/com/epic/zfarm/inventory/m/InventoryProxy.js'></script>
+    <script src='../main/js/com/epic/zfarm/inventory/m/vo/FarmItemConfigVO.js'></script>
+    <script src='../main/js/com/epic/zfarm/inventory/m/vo/ZombieItemConfigVO.js'></script>
+    <script src='../main/js/com/epic/zfarm/crops/m/vo/ActionConfigVO.js'></script>
+    <script src='../main/js/com/epic/zfarm/crops/note/CropActionNoteBody.js'></script>
+    <script src='../main/js/com/epic/zfarm/player/c/PlayerActionCommand.js'></script>
+    <script src='../main/js/com/epic/zfarm/player/c/macro/PlayerTargetReachedMacro.js'></script>
+    <script src='../main/js/com/epic/zfarm/zombie/v/event/ZombieEvent.js'></script>
+    <script src='../main/js/com/epic/zfarm/zombie/v/skin/ZombieSkin.js'></script>
+    <script src='../main/js/com/epic/zfarm/player/v/skin/PlayerSkin.js'></script>
+    <script src='../main/js/com/epic/zfarm/zombie/v/component/ZombieComponent.js'></script>
+    <script src='../main/js/com/epic/zfarm/zombie/note/ZombieComponentNoteBody.js'></script>
+    <script src='../main/js/com/epic/zfarm/zombie/v/manifest/ZombieManifest.js'></script>
+    <script src='../main/js/com/epic/zfarm/zombie/c/AddZombieCommand.js'></script>
+    <script src='../main/js/com/epic/zfarm/zombie/c/macro/AddZombieMacro.js'></script>
+    <script src='../main/js/com/epic/zfarm/crops/note/CropDryNoteBody.js'></script>
+    <script src='../main/js/com/epic/zfarm/crops/note/CropStateNoteBody.js'></script>
+    <script src='../main/js/com/epic/zfarm/crops/c/UpdateCropByIndexCommand.js'></script>
+    <script src='../main/js/com/epic/zfarm/zombie/c/SetClosestZombieCommand.js'></script>
+    <script src='../main/js/com/epic/zfarm/zombie/c/macro/NewClosestZombieMacro.js'></script>
+    <script src='../main/js/com/epic/zfarm/timer/note/TimerNoteBody.js'></script>
+    <script src='../main/js/com/epic/zfarm/crops/c/DeselectCropCommand.js'></script>
+    <script src='../main/js/com/epic/zfarm/navigation/note/NavigationEnabledNoteBody.js'></script>
+    <script src='../main/js/com/epic/zfarm/navigation/c/DisableNavigationCommand.js'></script>
+    <script src='../main/js/com/epic/zfarm/inventory/note/InventoryToggleNoteBody.js'></script>
+    <script src='../main/js/com/epic/zfarm/inventory/c/HideInventoryCommand.js'></script>
+    <script src='../main/js/com/epic/zfarm/timer/m/TimerProxy.js'></script>
+    <script src='../main/js/com/epic/zfarm/timer/c/StopTimerCommand.js'></script>
+    <script src='../main/js/com/epic/zfarm/player/c/PlayerIdleCommand.js'></script>
+    <script src='../main/js/com/epic/zfarm/navigation/c/macro/StartNavigationMacro.js'></script>
+    <script src='../main/js/com/epic/zfarm/navigation/c/EnableNavigationCommand.js'></script>
+    <script src='../main/js/com/epic/zfarm/inventory/c/ShowInventoryCommand.js'></script>
+    <script src='../main/js/com/epic/zfarm/player/note/PlayerShootingNoteBody.js'></script>
+    <script src='../main/js/com/epic/zfarm/player/note/PlayerMoveNoteBody.js'></script>
+    <script src='../main/js/com/epic/zfarm/player/c/PlayerScreenChangeCommand.js'></script>
+    <script src='../main/js/com/epic/zfarm/navigation/c/macro/ChangeScreenMacro.js'></script>
+    <script src='../main/js/com/epic/zfarm/crops/c/CropActionCompleteCommand.js'></script>
+    <script src='../main/js/com/epic/zfarm/crops/c/UpdateSelectedCropCommand.js'></script>
+    <script src='../main/js/com/epic/zfarm/timer/c/macro/TimerCompleteMacro.js'></script>
+    <script src='../main/js/com/epic/zfarm/player/note/PlayerActionNoteBody.js'></script>
+    <script src='../main/js/com/epic/zfarm/crops/c/DoCropActionCommand.js'></script>
+    <script src='../main/js/com/epic/zfarm/inventory/note/InventoryNoteBody.js'></script>
+    <script src='../main/js/com/epic/zfarm/inventory/c/SelectInventoryItemCommand.js'></script>
+    <script src='../main/js/com/epic/zfarm/navigation/note/NavigationNoteBody.js'></script>
+    <script src='../main/js/com/epic/zfarm/timer/note/TimerPositionNoteBody.js'></script>
+    <script src='../main/js/com/epic/zfarm/crops/c/CropClickedCommand.js'></script>
+    <script src='../main/js/com/epic/zfarm/crops/c/macro/CropClickedMacro.js'></script>
+    <script src='../main/js/com/epic/zfarm/zombie/c/RemoveZombieCommand.js'></script>
+    <script src='../main/js/com/epic/zfarm/inventory/v/skin/InventoryItemSkin.js'></script>
+    <script src='../main/js/com/epic/zfarm/inventory/v/component/InventoryItemComponent.js'></script>
+    <script src='../main/js/com/epic/zfarm/inventory/v/component/IInventoryComponent.js'></script>
+    <script src='../main/js/com/epic/zfarm/inventory/v/skin/SeedPanelSkin.js'></script>
+    <script src='../main/js/com/epic/zfarm/inventory/v/skin/InventorySkin.js'></script>
+    <script src='../main/js/com/epic/zfarm/inventory/v/event/InventoryEvent.js'></script>
+    <script src='../main/js/com/epic/zfarm/inventory/v/component/AbstractInventoryComponent.js'></script>
+    <script src='../main/js/com/epic/zfarm/inventory/v/component/InventoryComponent.js'></script>
+    <script src='../main/js/com/epic/zfarm/inventory/v/InventoryMediator.js'></script>
+    <script src='../main/js/com/epic/zfarm/inventory/v/component/SeedPanelComponent.js'></script>
+    <script src='../main/js/com/epic/zfarm/inventory/v/SeedPanelMediator.js'></script>
+    <script src='../main/js/com/epic/zfarm/init/c/InitInventoryCommand.js'></script>
+    <script src='../main/js/com/epic/zfarm/destroy/c/DestroyMenuCommand.js'></script>
+    <script src='../main/js/com/epic/zfarm/crops/v/event/CropEvent.js'></script>
+    <script src='../main/js/com/epic/zfarm/crops/v/skin/CropSkin.js'></script>
+    <script src='../main/js/com/epic/zfarm/crops/v/component/CropComponent.js'></script>
+    <script src='../main/js/com/epic/zfarm/crops/v/component/CropCollectionComponent.js'></script>
+    <script src='../main/js/com/epic/zfarm/crops/v/CropCollectionMediator.js'></script>
+    <script src='../main/js/com/epic/zfarm/crops/v/manifest/CropManifest.js'></script>
+    <script src='../main/js/com/epic/zfarm/init/c/InitCropsCommand.js'></script>
+    <script src='../main/js/com/epic/zfarm/player/v/manifest/PlayerManifest.js'></script>
+    <script src='../main/js/com/epic/zfarm/player/v/component/PlayerComponent.js'></script>
+    <script src='../main/js/com/epic/zfarm/player/v/PlayerMediator.js'></script>
+    <script src='../main/js/com/epic/zfarm/init/c/InitPlayerCommand.js'></script>
+    <script src='../main/js/com/epic/zfarm/scenery/v/skin/ScenerySkin.js'></script>
+    <script src='../main/js/com/epic/zfarm/init/c/InitSceneryCommand.js'></script>
+    <script src='../main/js/com/epic/zfarm/zombie/c/StartZombieSpawningCommand.js'></script>
+    <script src='../main/js/com/epic/zfarm/fence/v/manifest/FenceManifest.js'></script>
+    <script src='../main/js/com/epic/zfarm/fence/v/skin/FenceSkin.js'></script>
+    <script src='../main/js/com/epic/zfarm/init/c/InitFenceCommand.js'></script>
+    <script src='../../target/lib/com/epic/common/screen/c/SwitchScreenBackgroundToDefault.js'></script>
+    <script src='../main/js/com/epic/zfarm/player/c/PlayerEnterCommand.js'></script>
+    <script src='../main/js/com/epic/zfarm/zombie/v/component/ZombieManagerComponent.js'></script>
+    <script src='../main/js/com/epic/zfarm/zombie/v/ZombieMediator.js'></script>
+    <script src='../main/js/com/epic/zfarm/init/c/InitZombiesCommand.js'></script>
+    <script src='../main/js/com/epic/zfarm/navigation/v/skin/GrannyButtonSkin.js'></script>
+    <script src='../main/js/com/epic/zfarm/navigation/v/manifest/NavigationManifest.js'></script>
+    <script src='../main/js/com/epic/zfarm/navigation/v/skin/FarmButtonSkin.js'></script>
+    <script src='../main/js/com/epic/zfarm/navigation/v/event/NavigationEvent.js'></script>
+    <script src='../../target/lib/com/epic/common/ui/toggle/v/ToggleButtonComponent.js'></script>
+    <script src='../main/js/com/epic/zfarm/navigation/v/component/NavigationButtonComponent.js'></script>
+    <script src='../main/js/com/epic/zfarm/navigation/v/NavigationButtonMediator.js'></script>
+    <script src='../main/js/com/epic/zfarm/init/c/InitNavigationCommand.js'></script>
+    <script src='../main/js/com/epic/zfarm/timer/v/skin/TimerSkin.js'></script>
+    <script src='../main/js/com/epic/zfarm/timer/v/component/TimerComponent.js'></script>
+    <script src='../main/js/com/epic/zfarm/timer/v/TimerMediator.js'></script>
+    <script src='../main/js/com/epic/zfarm/init/c/InitTimerCommand.js'></script>
+    <script src='../main/js/com/epic/zfarm/init/c/macro/SetupGameMacro.js'></script>
+    <script src='../main/js/com/epic/zfarm/init/c/InitCommandsCommand.js'></script>
+    <script src='../../target/lib/com/epic/common/screen/c/InitializeScreenCommand.js'></script>
+    <script src='../main/js/com/epic/zfarm/init/c/macro/PreloadCompleteMacro.js'></script>
+    <script src='../../target/lib/com/epic/common/preloader/v/ProgressBarComponent.js'></script>
+    <script src='../../target/lib/com/epic/common/screen/v/ScreenComponent.js'></script>
+    <script src='../../target/lib/com/epic/common/preloader/v/skins/PercentageTextSkin.js'></script>
+    <script src='../main/js/com/epic/zfarm/ZFarmApp.js'></script>
+<script type='text/javascript'>var epicVersionNumber = '1.0-SNAPSHOT';</script>
+<!-- End Project class imports -->
+
+    <link rel="stylesheet" type="text/css" href="styles.css"/>
+
+</head>
+
+<body onload="new ZFarmApp();">
+
+    <div id="bg" class="preloaderBG">
+        <img id="gameBG" src="assets/backgroundGame.jpg"/>
+    </div>
+
+    <canvas id="game" width="960" height="540"></canvas>
+
+    <div id="scrollPrompt">
+        <div id="scrollPromptBackground"></div>
+        <img src="assets/drag.gif" id="scrollPromptImage"/>
+    </div>
+
+    <div id="fps"></div>
+</body>
+</html>

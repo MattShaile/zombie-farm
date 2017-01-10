@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Core-1.0-SNAPSHOT</title>
+    <!-- Project class imports -->
+    <script src='../../target/lib/min/easeljs-0.7.0.min.js'></script>
+    <script src='../../target/lib/min/puremvc-1.0.1.min.js'></script>
+    <script src='../../target/lib/min/soundjs-0.5.2.min.js'></script>
+    <script src='../../target/lib/min/tweenjs-0.5.0.min.js'></script>
+    <script src='../../target/lib/goog/base.js'></script>
+    <script src='../main/js/com/epic/common/sound/SoundMixer.js'></script>
+    <script src='../main/js/com/epic/common/sound/SoundClip.js'></script>
+    <script src='../main/js/com/epic/common/sound/SoundChannel.js'></script>
+    <script src='../main/js/com/epic/common/sound/SoundManager.js'></script>
+    <script src='../main/js/com/epic/common/sound/SoundTestApp.js'></script>
+    <script src='../main/js/com/epic/common/util/CurrencyFormat.js'></script>
+    <script src='../main/js/com/epic/common/util/Currency.js'></script>
+    <script src='../main/js/com/epic/common/util/UserAgent.js'></script>
+    <script src='../main/js/com/epic/common/util/StageSetup.js'></script>
+<script type='text/javascript'>var epicVersionNumber = '1.0-SNAPSHOT';</script>
+<!-- End Project class imports -->
+</head>
+<script>
+
+    var test;
+
+    function init()
+    {
+        test = new SoundTestApp();
+        console.log("INIT");
+    }
+
+</script>
+<body onload="init();">
+    <input type="BUTTON" value="CLICK TO PLAY TUNE" onclick="test.doTest()" />
+</body>
+</html>

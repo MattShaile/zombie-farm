@@ -1,0 +1,6 @@
+{
+"framerate":30,
+"images":["ZFarm_fence.png"],
+"frames":[[0, 0, 350, 188, 0, 349, 187]],
+"animations":{"basicFence": {"speed": 1, "frames": [0]}}
+}

@@ -1,0 +1,100 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.epic.pom</groupId>
+        <artifactId>base</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <groupId>com.epic.pom</groupId>
+    <artifactId>project</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>Project base POM</name>
+    <url>http://www.epicindustries.co.uk</url>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.7</version>
+                <executions>
+                    <execution>
+                        <id>Prepare package</id>
+                        <phase>prepare-package</phase>
+                        <configuration>
+                            <tasks>
+                                <taskdef name="trycatch" classname="net.sf.antcontrib.logic.TryCatchTask" classpathref="maven.plugin.classpath" />
+
+                                <!--Make compiled directory and use google closure compiler to minify and optimize-->
+                                <echo message="Google closure compiler started"/>
+                                
+								<trycatch property="ant.error.message" reference="ant.error.obj">
+									<try>
+										<exec executable="python" failonerror="true">
+											<arg line="${goog.closure.builder} --output_file='${compiled.dir}/${compiled.filename}.temp' --compiler_jar=${goog.closure.compiler} --output_mode=${goog.closure.output} --root=${js.dir} --root=${lib.dir} --namespace=${goog.closure.namespace} ${goog.compiler.flags}"/>
+										</exec>
+										<echo message="Google closure compiler complete"/>
+									</try>
+									<catch>
+										<loadfile property="closure.error" srcFile="${compiled.dir}/${compiled.filename}.temp"/>
+										<echo message="CLOSURE COMPILER ERROR" />
+										<echo message="${closure.error}" />
+										<fail message="${ant.error.message}" />
+									</catch>
+								</trycatch>
+
+                                <!--Concat minified files to the project and remove the temp compiled file -->
+                                <concat destfile="${compiled.dir}/${compiled.filename}">
+                                    <fileset dir="${lib.dir}/min" includes="*.js"/>
+                                    <filelist dir="${compiled.dir}" files="${compiled.filename}.temp"/>
+                                </concat>
+                                <delete file="${compiled.dir}/${compiled.filename}.temp"/>
+
+                                <!--Copy other folders and files required for build-->
+                                <copy todir="${compiled.dir}">
+                                    <fileset dir="${src.dir}">
+                                        <exclude name="js/"/>
+                                        <exclude name="debug.html"/>
+                                    </fileset>
+                                </copy>
+                            </tasks>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>ant</groupId>
+                        <artifactId>ant-jsch</artifactId>
+                        <version>1.6.5</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>com.jcraft</groupId>
+                        <artifactId>jsch</artifactId>
+                        <version>0.1.42</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>ant-contrib</groupId>
+                        <artifactId>ant-contrib</artifactId>
+                        <version>20020829</version>
+                        <exclusions>
+                            <exclusion>
+                                <groupId>ant</groupId>
+                                <artifactId>ant</artifactId>
+                            </exclusion>
+                        </exclusions>
+                    </dependency>
+                </dependencies>
+            </plugin>
+        </plugins>
+
+    </build>
+</project>

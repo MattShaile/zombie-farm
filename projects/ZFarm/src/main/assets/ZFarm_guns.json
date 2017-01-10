@@ -1,0 +1,22 @@
+{
+"framerate":30,
+"images":["ZFarm_guns.png"],
+"frames":[
+    [0, 167, 29, 19, 0, 7, 8],
+    [136, 125, 113, 20, 0, 38, 6],
+    [0, 125, 136, 42, 0, 55, 19],
+    [89, 0, 148, 43, 0, 26, 6],
+    [0, 0, 22, 125, 0, 27, 15],
+    [22, 0, 26, 111, 0, 34, -9],
+    [48, 0, 41, 60, 0, 30, 0]
+],
+"animations":{
+    "pistol": {"speed": 1, "frames": [0]},
+    "water": {"speed": 1, "frames": [6]},
+    "rifle": {"speed": 1, "frames": [2]},
+    "minigun": {"speed": 1, "frames": [3]},
+    "fork": {"speed": 1, "frames": [4]},
+    "shovel": {"speed": 1, "frames": [5]},
+    "shotgun": {"speed": 1, "frames": [1]}
+}
+}

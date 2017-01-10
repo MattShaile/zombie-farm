@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+    <META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
+    <title>ZFarm-1.0-SNAPSHOT</title>
+
+    <script src='src.js'></script>
+    <script type='text/javascript'>
+		var epicVersionNumber = '1.0-SNAPSHOT';
+		
+		function fullScreen() {
+			var el = document.documentElement, rfs = el.requestFullScreen || el.webkitRequestFullScreen || el.mozRequestFullScreen;
+			rfs.call(el);
+		}
+	</script>
+	
+	
+    <link rel="stylesheet" type="text/css" href="styles.css"/>
+</head>
+
+<body onload="new ZFarmApp();">
+
+<div id="bg" class="preloaderBG" onclick="fullScreen();">
+    <img id="gameBG" src="assets/backgroundGame.jpg"/>
+</div>
+
+<canvas id="game" width="960" height="540"></canvas>
+
+<div id="scrollPrompt">
+    <div id="scrollPromptBackground"></div>
+    <img src="assets/drag.gif" id="scrollPromptImage"/>
+</div>
+
+<!--<div id="fps"></div>-->
+
+</body>
+</html>
